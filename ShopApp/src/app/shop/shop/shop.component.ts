@@ -40,14 +40,19 @@ export class ShopComponent implements OnInit {
 
   changeCategory(newCategory?: Category) {
     this.selectedCategory = newCategory;
+    this.selectedPage = 1;
   }
 
   get pageNumbers(): number[] {
-    return Array(Math.ceil(this.productRepository
-        .getProducts(this.selectedCategory).length / this.productsPerPage))
-        .fill(0)
-        .map((a, i) => i + 1);
-}
+    return Array(
+      Math.ceil(
+        this.productRepository.getProducts(this.selectedCategory).length /
+          this.productsPerPage
+      )
+    )
+      .fill(0)
+      .map((a, i) => i + 1);
+  }
 
   changePage(p: number) {
     this.selectedPage = p;
