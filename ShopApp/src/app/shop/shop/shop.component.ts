@@ -25,7 +25,7 @@ export class ShopComponent implements OnInit {
 
   public selectedCategory: Category = null;
   get products(): Product[] {
-    return this.productRepository.getProducts();
+    return this.productRepository.getProducts(this.selectedCategory);
   }
 
   get categories(): Category[] {

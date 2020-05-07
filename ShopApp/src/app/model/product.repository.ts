@@ -1,6 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Product } from './product.model';
 import { RestService } from './rest.service';
+import { Category } from './category.model';
 
 @Injectable()
 export class ProductRepository implements OnInit {
@@ -8,18 +9,20 @@ export class ProductRepository implements OnInit {
 
   constructor(private restService: RestService) {
     this.restService
-    .getProducts()
-    .subscribe((products) => (this.products = products));
+      .getProducts()
+      .subscribe((products) => (this.products = products));
   }
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   getProduct(id: number): Product {
     return this.products.find((i) => i.id == id);
   }
 
-  getProducts():Product[]{
-    return this.products;
+  getProducts(category: Category = null): Product[] {
+    if (category) {
+      return this.products.filter((p) => p.category == category.name);
+    } else {
+      return this.products;
+    }
   }
 }
