@@ -7,7 +7,7 @@ import { Category } from 'src/app/model/category.model';
 @Component({
   selector: 'shop',
   templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.css'],
+  styles: [`.pt-100{padding-top:100px;}`],
 })
 export class ShopComponent implements OnInit {
   constructor(
