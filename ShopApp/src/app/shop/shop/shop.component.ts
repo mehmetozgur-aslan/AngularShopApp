@@ -7,7 +7,13 @@ import { Category } from 'src/app/model/category.model';
 @Component({
   selector: 'shop',
   templateUrl: './shop.component.html',
-  styles: [`.pt-100{padding-top:100px;}`],
+  styles: [
+    `
+      .pt-100 {
+        padding-top: 100px;
+      }
+    `,
+  ],
 })
 export class ShopComponent implements OnInit {
   constructor(
@@ -17,12 +23,16 @@ export class ShopComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  get products():Product[]{
+  public selectedCategory: Category = null;
+  get products(): Product[] {
     return this.productRepository.getProducts();
   }
 
-  get categories():Category[]{
+  get categories(): Category[] {
     return this.categoryRepository.getCategories();
   }
 
+  changeCategory(newCategory?: Category) {
+    this.selectedCategory = newCategory;
+  }
 }
