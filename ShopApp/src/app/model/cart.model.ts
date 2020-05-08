@@ -15,6 +15,7 @@ export class Cart {
     } else {
       this.items.push(new CartItem(product, quantity));
     }
+    this.calculate();
   }
 
   updateQuantity(product: Product, quantity: number) {
@@ -33,8 +34,6 @@ export class Cart {
       this.itemCount += item.quantity;
       this.total += item.quantity * item.product.price;
     });
-
-    this.calculate();
   }
 
   removeItem(id: number) {
@@ -48,6 +47,11 @@ export class Cart {
     this.itemCount = 0;
     this.total = 0;
   }
+
+  GetCartInfo(){
+    return this;
+  }
+
 }
 
 export class CartItem {

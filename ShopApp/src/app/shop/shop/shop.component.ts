@@ -3,6 +3,7 @@ import { ProductRepository } from 'src/app/model/product.repository';
 import { CategoryRepository } from 'src/app/model/category.repository';
 import { Product } from 'src/app/model/product.model';
 import { Category } from 'src/app/model/category.model';
+import { Cart } from 'src/app/model/cart.model';
 
 @Component({
   selector: 'shop',
@@ -18,7 +19,8 @@ import { Category } from 'src/app/model/category.model';
 export class ShopComponent implements OnInit {
   constructor(
     private productRepository: ProductRepository,
-    private categoryRepository: CategoryRepository
+    private categoryRepository: CategoryRepository,
+    private cart: Cart
   ) {}
 
   ngOnInit(): void {}
@@ -56,5 +58,9 @@ export class ShopComponent implements OnInit {
 
   changePage(p: number) {
     this.selectedPage = p;
+  }
+
+  addProductToCart(product: Product) {
+    this.cart.addItem(product);
   }
 }
