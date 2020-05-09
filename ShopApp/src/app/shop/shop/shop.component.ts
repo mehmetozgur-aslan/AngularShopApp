@@ -4,23 +4,18 @@ import { CategoryRepository } from 'src/app/model/category.repository';
 import { Product } from 'src/app/model/product.model';
 import { Category } from 'src/app/model/category.model';
 import { Cart } from 'src/app/model/cart.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'shop',
-  templateUrl: './shop.component.html',
-  styles: [
-    `
-      .pt-100 {
-        padding-top: 100px;
-      }
-    `,
-  ],
+  templateUrl: './shop.component.html'
 })
 export class ShopComponent implements OnInit {
   constructor(
     private productRepository: ProductRepository,
     private categoryRepository: CategoryRepository,
-    private cart: Cart
+    private cart: Cart,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -62,5 +57,6 @@ export class ShopComponent implements OnInit {
 
   addProductToCart(product: Product) {
     this.cart.addItem(product);
+    this.router.navigateByUrl('/cart');
   }
 }
