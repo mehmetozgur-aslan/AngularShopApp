@@ -10,53 +10,54 @@ import { Router } from '@angular/router';
   selector: 'shop',
   templateUrl: './shop.component.html'
 })
-export class ShopComponent implements OnInit {
-  constructor(
-    private productRepository: ProductRepository,
-    private categoryRepository: CategoryRepository,
-    private cart: Cart,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {}
-
+export class ShopComponent {
   public selectedCategory: Category = null;
-  public productsPerPage = 3;
+  public productsPerPage = 2;
   public selectedPage = 1;
+  public selectedProducts: Product[] = [];
+
+  constructor(
+      private productRepository: ProductRepository,
+      private categoryRepository: CategoryRepository,
+      private cart: Cart,
+      private router: Router) { }
 
   get products(): Product[] {
-    let index = (this.selectedPage - 1) * this.productsPerPage;
-    return this.productRepository
-      .getProducts(this.selectedCategory)
-      .slice(index, index + this.productsPerPage);
-  }
+      let index = (this.selectedPage - 1) * this.productsPerPage;
 
-  get categories(): Category[] {
-    return this.categoryRepository.getCategories();
-  }
+      this.selectedProducts = this.productRepository
+                              .getProducts(this.selectedCategory);
 
-  changeCategory(newCategory?: Category) {
-    this.selectedCategory = newCategory;
-    this.selectedPage = 1;
+      return this.selectedProducts
+          .slice(index, index + this.productsPerPage);
   }
 
   get pageNumbers(): number[] {
-    return Array(
-      Math.ceil(
-        this.productRepository.getProducts(this.selectedCategory).length /
-          this.productsPerPage
-      )
-    )
-      .fill(0)
-      .map((a, i) => i + 1);
+      return Array(Math.ceil(this.productRepository
+          .getProducts(this.selectedCategory).length / this.productsPerPage))
+          .fill(0)
+          .map((a, i) => i + 1);
   }
 
   changePage(p: number) {
-    this.selectedPage = p;
+      this.selectedPage = p;
+  }
+
+  changePageSize(size: number) {
+      this.productsPerPage = size;
+      this.changePage(1);
+  }
+
+  get categories(): Category[] {
+      return this.categoryRepository.getCategories();
+  }
+
+  changeCategory(newCategory?: Category) {
+      this.selectedCategory = newCategory;
   }
 
   addProductToCart(product: Product) {
-    this.cart.addItem(product);
-    this.router.navigateByUrl('/cart');
+      this.cart.addItem(product);
+      this.router.navigateByUrl('/cart');
   }
 }
