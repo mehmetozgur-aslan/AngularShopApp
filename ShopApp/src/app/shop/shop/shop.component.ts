@@ -18,9 +18,7 @@ export class ShopComponent {
 
   constructor(
       private productRepository: ProductRepository,
-      private categoryRepository: CategoryRepository,
-      private cart: Cart,
-      private router: Router) { }
+      private categoryRepository: CategoryRepository) { }
 
   get products(): Product[] {
       let index = (this.selectedPage - 1) * this.productsPerPage;
@@ -54,10 +52,5 @@ export class ShopComponent {
 
   changeCategory(newCategory?: Category) {
       this.selectedCategory = newCategory;
-  }
-
-  addProductToCart(product: Product) {
-      this.cart.addItem(product);
-      this.router.navigateByUrl('/cart');
   }
 }
