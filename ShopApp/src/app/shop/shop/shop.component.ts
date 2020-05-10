@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'shop',
-  templateUrl: './shop.component.html'
+  templateUrl: './shop.component.html',
 })
 export class ShopComponent {
   public selectedCategory: Category = null;
@@ -17,40 +17,41 @@ export class ShopComponent {
   public selectedProducts: Product[] = [];
 
   constructor(
-      private productRepository: ProductRepository,
-      private categoryRepository: CategoryRepository) { }
+    private productRepository: ProductRepository,
+  ) {}
 
   get products(): Product[] {
-      let index = (this.selectedPage - 1) * this.productsPerPage;
+    let index = (this.selectedPage - 1) * this.productsPerPage;
 
-      this.selectedProducts = this.productRepository
-                              .getProducts(this.selectedCategory);
+    this.selectedProducts = this.productRepository.getProducts(
+      this.selectedCategory
+    );
 
-      return this.selectedProducts
-          .slice(index, index + this.productsPerPage);
+    return this.selectedProducts.slice(index, index + this.productsPerPage);
   }
 
   get pageNumbers(): number[] {
-      return Array(Math.ceil(this.productRepository
-          .getProducts(this.selectedCategory).length / this.productsPerPage))
-          .fill(0)
-          .map((a, i) => i + 1);
+    return Array(
+      Math.ceil(
+        this.productRepository.getProducts(this.selectedCategory).length /
+          this.productsPerPage
+      )
+    )
+      .fill(0)
+      .map((a, i) => i + 1);
   }
 
   changePage(p: number) {
-      this.selectedPage = p;
+    this.selectedPage = p;
   }
 
   changePageSize(size: number) {
-      this.productsPerPage = size;
-      this.changePage(1);
+    this.productsPerPage = size;
+    this.changePage(1);
   }
 
-  get categories(): Category[] {
-      return this.categoryRepository.getCategories();
+  getCategory(category:Category){
+this.selectedCategory=category;
   }
 
-  changeCategory(newCategory?: Category) {
-      this.selectedCategory = newCategory;
-  }
 }
